@@ -79,4 +79,8 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+
+  .bg-global {
+    @apply bg-gray-200 dark:bg-[#000a25];
+  }
 }
