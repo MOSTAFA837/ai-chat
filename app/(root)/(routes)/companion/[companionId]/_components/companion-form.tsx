@@ -1,11 +1,18 @@
 "use client";
 
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Category, Companion } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
+import ImageUpload from "@/components/image-upload";
 
 interface Props {
   categories: Category[];
@@ -46,6 +53,8 @@ export default function CompanionForm({ categories, initialData }: Props) {
     },
   });
 
+  const isLoading = form.formState.isSubmitting;
+
   return (
     <div className="h-full p-4 space-y-2 max-w-3xl mx-auto">
       <Form {...form}>
@@ -60,6 +69,22 @@ export default function CompanionForm({ categories, initialData }: Props) {
 
             <Separator className="bg-primary/10" />
           </div>
+
+          <FormField
+            name="src"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-center justify-center space-y-4 col-span-2">
+                <FormControl>
+                  <ImageUpload
+                    disabled={isLoading}
+                    onChange={field.onChange}
+                    value={field.value}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </form>
       </Form>
     </div>
